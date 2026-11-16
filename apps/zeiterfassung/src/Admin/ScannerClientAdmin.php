@@ -9,7 +9,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Zeiterfassung\Entity\ScannerLogEntry;
 
 final class ScannerClientAdmin extends AbstractAdmin
 {
@@ -49,18 +48,12 @@ final class ScannerClientAdmin extends AbstractAdmin
             ->add('id')
             ->add('uname')
             ->add('location')
-            ->add('lastOnline', null, [
-                // 'format' => 'Y-m-d H:i',
-                // 'locale' => 'de',
-                // 'timezone' => 'Europe/Berlin',
-            ])
+            ->add('lastOnline')
         ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        
-        $id = $this->getSubject()->getId();
         $show
             ->add('id')
             ->add('uname')

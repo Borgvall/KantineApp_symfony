@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zeiterfassung\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -93,5 +94,11 @@ final class ScannerLogAdmin extends AbstractAdmin
             ->add('message')
             ->add('timeStamp')
         ;
+    }
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::SORT_ORDER] = 'DESC';
+        $sortValues[DatagridInterface::SORT_BY] = 'id';
     }
 }
