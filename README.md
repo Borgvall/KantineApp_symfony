@@ -2,11 +2,11 @@
 
 ## Server Daten updaten
 
-nachdem der neue code auf [github.com/it4impuls/KantineApp_symfony/](github.com/it4impuls/KantineApp_symfony/) geladen wurde, führe den [workflow deploy to all-Inkl (Production)](https://github.com/it4impuls/KantineApp_symfony/actions/workflows/Deploy_Prod.yml) aus (run workflow). Dies läd alle wichtigen date auf den Server. Falls sich daten zum Server geändert haben müssen diese in [optionen -> Environments -> dev](https://github.com/it4impuls/KantineApp_symfony/settings/environments) von den Fachanleitern geändert werden.
+Nachdem der neue Code auf [github.com/it4impuls/KantineApp_symfony/](github.com/it4impuls/KantineApp_symfony/) geladen wurde, führe den [workflow deploy to all-Inkl (Production)](https://github.com/it4impuls/KantineApp_symfony/actions/workflows/Deploy_Prod.yml) aus (run workflow). Dies lädt alle wichtigen Daten auf den Server. Falls sich Daten zum Server geändert haben, müssen diese in [optionen -> Environments -> dev](https://github.com/it4impuls/KantineApp_symfony/settings/environments) von den Fachanleitern geändert werden.
 
 ## Neue composer packages installieren
-Falls neue packages installiert wurden, müssen diese auf dem server installiert werden.
-Logge dich dafür per ssh auf den server ein und führe folgende commandos aus:
+Falls neue Packages installiert wurden, müssen diese auf dem Server installiert werden.
+Logge dich dafür per ssh auf den Server ein und führe folgende Befehle aus:
 ```bash
 cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
 export APP_ENV=prod
@@ -27,20 +27,21 @@ php bin/console secrets:decrypt-to-local --force
 ```
 
 ## DB Felder updaten
-Falls Felder geändert wurden (Änderungen in /src/Entity/**) muss die Datenbank [migriert](https://symfony.com/doc/current/the-fast-track/en/8-doctrine.html#migrating-the-database) werden. Mit
+Falls Felder geändert wurden, (Änderungen in `/src/Entity/**`) **muss die Datenbank [migriert](https://symfony.com/doc/current/the-fast-track/en/8-doctrine.html#migrating-the-database) werden.** Mit
 ```bash
 php bin/console make:migration
 ```
-Migration erstellen BEVOR der Code auf Github gepusht wird. Dies erstellt eine Datei im `migrations/` Ordner, welche auf den Server geladen werden muss. (siehe "Server Daten updaten")
+Migration erstellen **BEVOR** der Code auf Github gepusht wird.
+Dies erstellt eine Datei im `migrations/` Ordner, welche auf den Server geladen werden muss. (siehe "Server Daten updaten")
 Dann per ssh auf Server einloggen und 
 ```bash
 cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
 php bin/console doctrine:migrations:migrate
 ```
-ausführen
+ausführen.
 
 # Server Installation
-Schritte für update zuerst ausführen, um danen auf den Server hochzuladen und composer packages installieren.
+Schritte für Update zuerst ausführen, um dann den Code auf den Server hochzuladen und composer packages zu installieren.
 
 ## Per SSH auf Server einloggen
 Vom eigenen PC mit
@@ -55,7 +56,7 @@ cd kantine.impuls-reha.de
 
 
 ## Secrets hochladen/setzen / generate JWT
-Falls Secrets und decrypt key in `/config/secrets/prod/` von einer vorherigen installation vorhanden sind, lade diese auf den Server hoch. Die Dateien haben das Format `prod.{{secret_name}}.{{random_hex}}.php`, sowie `prod.decrypt.private.php`, `prod.encrypt.public.php`, `prod.list.php`.
+Falls Secrets und decrypt key in `/config/secrets/prod/` von einer vorherigen Installation vorhanden sind, lade diese auf den Server hoch. Die Dateien haben das Format `prod.{{secret_name}}.{{random_hex}}.php`, sowie `prod.decrypt.private.php`, `prod.encrypt.public.php`, `prod.list.php`.
 
 Falls eines dieser Dateien nicht vorhanden ist, müssen die Secrets [neu generiert werden](https://symfony.com/doc/current/configuration/secrets.html#generate-cryptographic-keys):
 ```bash
@@ -93,27 +94,27 @@ in Webspace `public/` hinter dem bestehenden Namen eingeben.
 ```bash
 php bin/console sonata:user:create --super-admin "{{username}}" "{{email}}" "{{password}}"
 ```
-{{ }} mit den tatsächlichen Daten Ersätzen
+{{ }} mit den tatsächlichen Daten ersetzen.
 
 ## Sonstige Accounts erstellen
-Nun sollte die Webseite funktionieren. Auf der Admin-Seite [kantine.impuls-reha.de/admin](kantine.impuls-reha.de/admin) Anmelden. Unter `Benutzer -> Benutzer` Neuen Benutzer anlegen.
+Nun sollte die Webseite funktionieren. Auf der Admin-Seite [kantine.impuls-reha.de/admin](kantine.impuls-reha.de/admin) anmelden. Unter `Benutzer -> Benutzer` Neuen Benutzer anlegen.
 
 Wichtig!!! Achte auf die Rollen. Gib neuen Account nur so viele Rechte wie er tatsächlich braucht. (z.B. kantine nur Zugriff auf Bestellungen, TN-Verwaltung nur Zugriff auf Kunden etc. )
 
-Stelle Sicher dass "Aktiviert" angekreutzt ist, damit man sich auch damit anmelden kann.
+Stelle sicher dass "Aktiviert" angekreuzt ist, damit man sich auch damit anmelden kann.
 
 
 ## Cronjobs
-Das löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden. https://all-inkl.com/wichtig/anleitungen/kas/tools/cronjobs/einrichtung_479.html:
+Das Löschen alter, inaktiver Teilnehmer läuft in einem cronjob. Dieser muss im all-inkl unter `Tools` -> `cronjobs` eingerichtet werden. https://all-inkl.com/wichtig/anleitungen/kas/tools/cronjobs/einrichtung_479.html:
 ![all-inkl cron](media/cronjob.png)
 
-Es muss ein Benutzer mit `Costumer delete` privilegien Angelegt werden und dessen login Informationen unter `advanced` abgelegt werden.
+Es muss ein Benutzer mit `Costumer delete` Privilegien angelegt werden und dessen Login-Informationen unter `advanced` abgelegt werden.
 ![cron user](media/cron_user.png)
 
 
 # Testing
 ## Requirements
-Extra Datebank dessen zugangsdaten in .env.test eingetragen sind:
+Extra Datenbank dessen Zugangsdaten in .env.test eingetragen sind:
 ```env
 # define your env variables for the test env here
 KERNEL_CLASS='Shared\Kernel'
