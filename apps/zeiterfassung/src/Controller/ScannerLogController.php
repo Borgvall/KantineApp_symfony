@@ -2,7 +2,6 @@
 
 namespace Zeiterfassung\Controller;
 
-use Shared\Entity\Costumer;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;

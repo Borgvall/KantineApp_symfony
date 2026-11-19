@@ -40,7 +40,7 @@ final class CostumerController extends AbstractFOSRestController
 
     #[IsGranted('ROLE_ADMIN_COSTUMER_VIEW')]
     #[Route('/api/costumers/{id}', name: 'get_costumer')]
-    public function getCostumer(Request $request, $id): Response | JsonResponse
+    public function getCostumer(Request $request, int $id): Response | JsonResponse
     {
         // get Costumer in JSON compatible format
         $data = $this->entityManager->getRepository(Costumer::class)->findByCode($id)->getArrayResult();
