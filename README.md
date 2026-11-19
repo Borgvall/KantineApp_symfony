@@ -26,6 +26,26 @@ php bin/console assets:install
 ## Einrichten der MariaDB
 
 Die MariaDB muss auf dem Database Host eingerichtet werden.
+Man braucht eine Datenbank DATABASE_NAME, einen Benutzer DATABASE_USER@SYMFONY_HOST mit Passwort DATABASE_PASSWORD.
+Sollten MariaDB und Symfony auf den gleichen Host laufen, benutze '127.0.0.1' als SYMFONY_HOST.
+Der Benutzer muss Vollzugriff auf die angelegte Daten haben.
+Die Authentifizierung mittels Linux-Sockets wird von Produkt nicht unterstützt.
+
+Dazu führt man auf dem Datenbank Host aus:
+
+```bash
+sudo mariadb
+```
+
+In der sich öffnenden Kommandozeile müssen folgende SQL-Queries mit angepassten Daten ausgeführt werden:
+
+```sql
+CREATE DATABASE 'DATABASE_NAME';
+CREATE USER IF NOT EXISTS 'DATABASE_USER'@'SYMFONY_HOST' IDENTIFIED BY 'DATABASE_PASSWORD';
+GRANT ALL PRIVILEGES ON 'DATABASE_NAME'.* TO 'DATABASE_USER'@'SYMFONY_HOST';
+```
+
+Sollten Symfony und die MariaDB auf verschiedenen Hosts laufen, muss man die Listen-Adresse von MariaDB entsprechend erweitern und gegebenenfalls die Firewalleinstellungen anpassen.
 
 ## Update DB Zugangsdaten
 ```bash
