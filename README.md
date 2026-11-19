@@ -13,6 +13,11 @@ export APP_ENV=prod
 composer install --no-dev --optimize-autoloader
 ```
 
+## Einrichten der MariaDB
+
+Die MariaDB muss auf dem Database Host eingerichtet werden.
+
+
 ## Update DB Zugangsdaten
 ```bash
 cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
