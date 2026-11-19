@@ -13,10 +13,19 @@ export APP_ENV=prod
 composer install --no-dev --optimize-autoloader
 ```
 
+## Assets installieren
+
+Sonata braucht mehrere Assets, d.h. standard CSS, JS etc. Dateien, um korrekt zu funktionieren.
+Diese installiert man mit folgenden Befehlen:
+
+```bash
+php bin/console asset-map:compile
+php bin/console assets:install
+```
+
 ## Einrichten der MariaDB
 
 Die MariaDB muss auf dem Database Host eingerichtet werden.
-
 
 ## Update DB Zugangsdaten
 ```bash
