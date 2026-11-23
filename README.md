@@ -3,6 +3,7 @@
 Dieses Git-Repository enthält zwei Symfony Apps für die Kantinenabrechnung und Zeiterfassung der Impuls Reha & Arbeit Teilnehmer.
 Die Auswahl, welche App aktiviert ist, erfolgt durch die Umgebungsvariable APP_ID.
 Diese muss entweder auf 'kantine' oder 'zeiterfassung' gesetzt werden.
+Auf dem Produktionsserver geschieht dieses in `public/.htaccess`, indem es schaut, über welche Subdomain die Seite aufgerufen wurde.
 
 # Updating der Webseite
 
@@ -23,9 +24,10 @@ composer install --no-dev --optimize-autoloader
 
 Die MariaDB muss auf dem Database Host eingerichtet werden.
 Man braucht eine Datenbank DATABASE_NAME, einen Benutzer DATABASE_USER@SYMFONY_HOST mit Passwort DATABASE_PASSWORD.
+Die Datenbankeinstellungen `DATABASE_*` werden weiter unten als Symfony-Secrets für den Webserver gespeichert.
 Sollten MariaDB und Symfony auf den gleichen Host laufen, benutze 'localhost' als SYMFONY_HOST.
 Der Benutzer muss Vollzugriff auf die angelegte Daten haben.
-Die Authentifizierung mittels Linux-Sockets wird von Produkt nicht unterstützt.
+Die Authentifizierung mittels Linux-Sockets wird von diesem Produkt nicht unterstützt.
 
 Dazu führt man auf dem Datenbank Host aus:
 
@@ -44,6 +46,9 @@ GRANT ALL PRIVILEGES ON 'DATABASE_NAME'.* TO 'DATABASE_USER'@'SYMFONY_HOST';
 Sollten Symfony und die MariaDB auf verschiedenen Hosts laufen, muss man die Listen-Adresse von MariaDB entsprechend erweitern und gegebenenfalls die Firewalleinstellungen anpassen.
 
 ## Update DB Zugangsdaten
+
+Hier werden die Zugangsdaten von oben als Symfony-Secrets gespeichert:
+
 ```bash
 cd kantine.impuls-reha.de       # Falls nicht schon im Ordner
 export APP_RUNTIME_ENV=prod
