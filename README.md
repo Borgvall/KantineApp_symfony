@@ -1,3 +1,9 @@
+# Symfony Apps für die Kantine und die Zeiterfassung
+
+Dieses Git-Repository enthält zwei Symfony Apps für die Kantinenabrechnung und Zeiterfassung der Impuls Reha & Arbeit Teilnehmer.
+Die Auswahl, welche App aktiviert ist, erfolgt durch die Umgebungsvariable APP_ID.
+Diese muss entweder auf 'kantine' oder 'zeiterfassung' gesetzt werden.
+
 # Updating der Webseite
 
 ## Server Daten updaten
@@ -13,21 +19,11 @@ export APP_ENV=prod
 composer install --no-dev --optimize-autoloader
 ```
 
-## Assets installieren
-
-Sonata braucht mehrere Assets, d.h. standard CSS, JS etc. Dateien, um korrekt zu funktionieren.
-Diese installiert man mit folgenden Befehlen:
-
-```bash
-php bin/console asset-map:compile
-php bin/console assets:install
-```
-
 ## Einrichten der MariaDB
 
 Die MariaDB muss auf dem Database Host eingerichtet werden.
 Man braucht eine Datenbank DATABASE_NAME, einen Benutzer DATABASE_USER@SYMFONY_HOST mit Passwort DATABASE_PASSWORD.
-Sollten MariaDB und Symfony auf den gleichen Host laufen, benutze '127.0.0.1' als SYMFONY_HOST.
+Sollten MariaDB und Symfony auf den gleichen Host laufen, benutze 'localhost' als SYMFONY_HOST.
 Der Benutzer muss Vollzugriff auf die angelegte Daten haben.
 Die Authentifizierung mittels Linux-Sockets wird von Produkt nicht unterstützt.
 
@@ -114,6 +110,18 @@ Um das Datenbank Schema in die Datenbank zu übernehmen, muss
 php bin/console doctrine:migrations:migrate
 ```
 ausgeführt werden.
+
+## Assets installieren
+
+Sonata braucht mehrere Assets, d.h. standard CSS, JS etc. Dateien, um korrekt zu funktionieren.
+Diese installiert man mit folgenden Befehlen:
+
+```bash
+php bin/console asset-map:compile
+php bin/console assets:install
+```
+
+Beachte, dass der obige compile Schritt von der JWT_PASSPHRASE abhängt.
 
 ## All-ink auf den `public` Ordner verweisen
 Webspace Directory muss in den public order zeigen!
